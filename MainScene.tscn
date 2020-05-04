@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://SystemIcon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://FactionSummary.gd" type="Script" id=2]
+[ext_resource path="res://PassYearButton.gd" type="Script" id=3]
+
+[node name="MainScene" type="Node2D"]
+__meta__ = {
+"_editor_description_": "This is just the main scene."
+}
+
+[node name="SystemCluster" type="Node2D" parent="."]
+__meta__ = {
+"_editor_description_": "This is the scene where you will be able to view multiple star systems and their varying connections. Aka a \"World Map\"."
+}
+
+[node name="SystemIcon" parent="SystemCluster" instance=ExtResource( 1 )]
+position = Vector2( 885.4, 164.35 )
+scale = Vector2( 0.206314, 0.206314 )
+systemName = "AloneLand"
+systemLink = "AloneLandSystem.tscn"
+systemFaction = "Silver Union"
+connectedNodes = [ "BottomLand" ]
+
+[node name="SystemIcon2" parent="SystemCluster" instance=ExtResource( 1 )]
+position = Vector2( 209.95, 425.6 )
+scale = Vector2( 0.206314, 0.206314 )
+systemName = "BottomLand"
+systemLink = "BottomLandSystem.tscn"
+systemFaction = "Silver Union"
+connectedNodes = [ "UppishLand" ]
+
+[node name="SystemIcon3" parent="SystemCluster" instance=ExtResource( 1 )]
+position = Vector2( 111.15, 115.9 )
+scale = Vector2( 0.206314, 0.206314 )
+systemName = "UppishLand"
+systemLink = "UppishLandSystem.tscn"
+systemFaction = "Knights of New"
+
+[node name="FactionSummary" type="Node2D" parent="SystemCluster"]
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="SystemCluster/FactionSummary"]
+margin_left = 750.526
+margin_top = 513.684
+margin_right = 790.526
+margin_bottom = 527.684
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PassYearButton" type="Button" parent="."]
+margin_left = 313.573
+margin_top = 2.21609
+margin_right = 325.573
+margin_bottom = 22.2161
+rect_scale = Vector2( 30.0999, 3.93053 )
+focus_mode = 0
+enabled_focus_mode = 0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PASSYEAR" type="Label" parent="PassYearButton"]
+margin_left = 1.0605
+margin_top = 0.937077
+margin_right = 67.0605
+margin_bottom = 14.9371
+rect_scale = Vector2( 0.14738, 1.17736 )
+text = "PASS YEAR"
+
+[node name="Year" type="Label" parent="PassYearButton"]
+margin_left = -10.4564
+margin_right = 29.5436
+margin_bottom = 14.0
+rect_scale = Vector2( 0.0782753, 0.621737 )
+
+[node name="Queue" type="Label" parent="PassYearButton"]
+margin_left = -0.154997
+margin_top = 20.4751
+margin_right = 39.845
+margin_bottom = 34.4751
+rect_scale = Vector2( 0.0833054, 0.567557 )
+[connection signal="addFactoryToQueue" from="SystemCluster/SystemIcon" to="PassYearButton" method="_on_SystemIcon_addFactoryToQueue"]
+[connection signal="summaryUpdate" from="SystemCluster/SystemIcon" to="SystemCluster/FactionSummary" method="_on_SystemIcon_summaryUpdate"]
+[connection signal="addFactoryToQueue" from="SystemCluster/SystemIcon2" to="PassYearButton" method="_on_SystemIcon2_addFactoryToQueue"]
+[connection signal="summaryUpdate" from="SystemCluster/SystemIcon2" to="SystemCluster/FactionSummary" method="_on_SystemIcon2_summaryUpdate"]
+[connection signal="summaryUpdate" from="SystemCluster/SystemIcon3" to="SystemCluster/FactionSummary" method="_on_SystemIcon3_summaryUpdate"]
+[connection signal="pressed" from="PassYearButton" to="PassYearButton" method="_on_PassYearButton_pressed"]
+[connection signal="summaryUpdate" from="PassYearButton" to="SystemCluster/FactionSummary" method="_on_PassYearButton_summaryUpdate"]
+[connection signal="summaryUpdate" from="PassYearButton" to="PassYearButton" method="_on_PassYearButton_summaryUpdate"]
